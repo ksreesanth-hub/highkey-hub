@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Psychology | HighKey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <button onclick="window.location.href='dashboard.html'" class="secondary-btn">← Back</button>
+        <h2 style="margin:0; font-family:'Comfortaa', sans-serif; color:var(--dark-text);">Social Psychology</h2>
+        <div style="width: 80px;"></div> <!-- Invisible spacer to keep the title centered -->
+    </header>
+
+    <main class="path-container">
+        <h3 style="text-align: center; color: var(--light-text); margin-bottom: 40px;">Level 1: Foundations of the Social Mind</h3>
+
+        <!-- Node 1: Introduction (Active) -->
+        <div class="node-wrapper">
+            <div class="node active-node" onclick="window.location.href='module-1.html'">
+                <span class="node-icon">🧠</span>
+            </div>
+            <p class="node-title">Introduction</p>
+        </div>
+
+        <div class="path-line"></div>
+
+        <!-- Node 2: Key Figures (Locked) -->
+        <div class="node-wrapper">
+            <div class="node locked-node">
+                <span class="node-icon">🔒</span>
+            </div>
+            <p class="node-title" style="color: var(--light-text);">Key Figures</p>
+        </div>
+
+        <div class="path-line locked-line"></div>
+
+        <!-- Node 3: Levels of Analysis (Locked) -->
+        <div class="node-wrapper">
+            <div class="node locked-node">
+                <span class="node-icon">🔒</span>
+            </div>
+            <p class="node-title" style="color: var(--light-text);">Levels of Analysis</p>
+        </div>
+    </main>
+</body>
+</html>
