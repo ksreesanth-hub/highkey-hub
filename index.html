@@ -41,7 +41,7 @@
             signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
-                window.location.href = "dashboard.html";
+                window.location.href = "dashboard.html"; // This is the crucial new line!
             }).catch((error) => {
                 alert("Login failed: " + error.message);
             });
