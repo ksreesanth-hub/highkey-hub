@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3 | HighKey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <button onclick="window.location.href='social-psychology.html'" class="secondary-btn">← Exit</button>
+        <div class="lesson-progress-bar">
+            <div id="progress-fill" class="progress-bar-fill" style="width: 25%;"></div>
+        </div>
+    </header>
+
+    <main class="flashcard-container">
+        <div class="flashcard" id="flashcard">
+            <h2 id="card-title" class="card-title">Levels of Analysis</h2>
+            <p id="card-content" class="card-text">Social psychologists study human behavior at three interconnected levels that work like nested circles—each one influencing the others.</p>
+        </div>
+        <button id="next-btn" class="primary-btn" style="margin-top: 30px;">Continue</button>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDWmgWjv2qPL8_NOyG2dKGfFhV13jhwUfU",
+          authDomain: "highkey-hub-937cb.firebaseapp.com",
+          projectId: "highkey-hub-937cb",
+          storageBucket: "highkey-hub-937cb.firebasestorage.app",
+          messagingSenderId: "1037256979554",
+          appId: "1:1037256979554:web:04b33851ba444b99ca8d3b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Your exact PPT content for Module 3
+        const lessonData = [
+            { title: "Levels of Analysis", content: "Social psychologists study human behavior at three interconnected levels that work like nested circles—each one influencing the others." },
+            { title: "Micro Level (Individual)", content: "Focuses on personal psychology and individual decision-making, such as social cognition, perception, and how one person processes information." },
+            { title: "Meso Level (Group)", content: "The 'in-between' level focusing on group dynamics and interpersonal relationships, like how groups form norms and influence members." },
+            { title: "Macro Level (Societal)", content: "Focuses on large-scale social structures, cultural forces, economic systems, and societal institutions like education and government." }
+        ];
+
+        let currentCard = 0;
+        const cardTitle = document.getElementById('card-title');
+        const cardContent = document.getElementById('card-content');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                nextBtn.addEventListener('click', async () => {
+                    currentCard++;
+                    if (currentCard < lessonData.length) {
+                        cardTitle.innerText = lessonData[currentCard].title;
+                        cardContent.innerText = lessonData[currentCard].content;
+                        progressFill.style.width = (((currentCard + 1) / lessonData.length) * 100) + '%';
+                    } else {
+                        nextBtn.innerText = "Saving...";
+                        // Upgrade the student to Level 4 (Unit 1 Complete!)
+                        await setDoc(doc(db, "users", user.uid), { sp_level: 4 }, { merge: true });
+                        alert("Unit 1 Complete! You have mastered the foundations.");
+                        window.location.href = "dashboard.html"; // Send them back to the main dashboard
+                    }
+                });
+            } else {
+                window.location.href = "index.html"; 
+            }
+        });
+    </script>
+</body>
+</html>
