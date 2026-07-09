@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="login-container">
-        <!-- We will replace the src with your actual uploaded logo later -->
         <img src="HighKey_Logo.png" alt="HighKey Logo" class="logo">
         <p class="subtitle">Welcome to your Social Psychology hub.</p>
         
@@ -16,5 +15,37 @@
             Login with Google
         </button>
     </div>
+
+    <!-- Firebase Magic Keys & Login Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDWmgWjv2qPL8_NOyG2dKGfFhV13jhwUfU",
+          authDomain: "highkey-hub-937cb.firebaseapp.com",
+          projectId: "highkey-hub-937cb",
+          storageBucket: "highkey-hub-937cb.firebasestorage.app",
+          messagingSenderId: "1037256979554",
+          appId: "1:1037256979554:web:04b33851ba444b99ca8d3b"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Make the button work
+        const loginButton = document.getElementById('google-login-btn');
+        loginButton.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+            .then((result) => {
+                const user = result.user;
+                alert("Welcome to HighKey, " + user.displayName + "!");
+            }).catch((error) => {
+                alert("Login failed: " + error.message);
+            });
+        });
+    </script>
 </body>
 </html>
