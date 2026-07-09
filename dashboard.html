@@ -72,11 +72,13 @@
 
                 if (docSnap.exists()) {
                     // Get the level (if it doesn't exist yet, default to 1)
-                    const level = docSnap.data().sp_level || 1;
-                    
-                    // Calculate percentage based on Unit 1 (Level 4 = 100% Complete)
-                    let percentage = Math.round(((level - 1) / 3) * 100);
-                    
+                 const level = docSnap.data().sp_level || 1;
+
+                 // Calculate percentage based on the ENTIRE course 
+                 // (Assuming 5 units with approx 3 modules each = 15 total modules)
+                 const TOTAL_MODULES = 15;
+                 const completedModules = level - 1;
+                 let percentage = Math.round((completedModules / TOTAL_MODULES) * 100);                    
                     // Cap it at 100 just in case
                     if (percentage > 100) percentage = 100;
 
