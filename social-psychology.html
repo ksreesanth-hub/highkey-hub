@@ -16,7 +16,7 @@
     <main class="path-container">
         <h3 style="text-align: center; color: var(--light-text); margin-bottom: 40px;">Level 1: Foundations of the Social Mind</h3>
 
-        <!-- Node 1: Introduction (Always Active) -->
+        <!-- Node 1: Introduction -->
         <div class="node-wrapper">
             <div class="node active-node" onclick="window.location.href='module-1.html'">
                 <span class="node-icon">🧠</span>
@@ -26,22 +26,22 @@
 
         <div class="path-line" id="line-1"></div>
 
-        <!-- Node 2: Key Figures (Starts Locked, unlocks via Firebase) -->
+        <!-- Node 2: Key Figures -->
         <div class="node-wrapper">
             <div class="node locked-node" id="node-2">
                 <span class="node-icon" id="icon-2">🔒</span>
             </div>
-            <p class="node-title" style="color: var(--light-text);">Key Figures</p>
+            <p class="node-title" id="title-2" style="color: var(--light-text);">Key Figures</p>
         </div>
 
-        <div class="path-line locked-line"></div>
+        <div class="path-line locked-line" id="line-2"></div>
 
-        <!-- Node 3: Levels of Analysis (Locked) -->
+        <!-- Node 3: Levels of Analysis -->
         <div class="node-wrapper">
-            <div class="node locked-node">
-                <span class="node-icon">🔒</span>
+            <div class="node locked-node" id="node-3">
+                <span class="node-icon" id="icon-3">🔒</span>
             </div>
-            <p class="node-title" style="color: var(--light-text);">Levels of Analysis</p>
+            <p class="node-title" id="title-3" style="color: var(--light-text);">Levels of Analysis</p>
         </div>
     </main>
 
@@ -63,21 +63,33 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Check user level and unlock nodes
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
                 
-                if (docSnap.exists() && docSnap.data().sp_level >= 2) {
-                    // Unlock Node 2!
-                    const node2 = document.getElementById('node-2');
-                    const icon2 = document.getElementById('icon-2');
+                if (docSnap.exists()) {
+                    const level = docSnap.data().sp_level;
                     
-                    node2.classList.remove('locked-node');
-                    node2.classList.add('active-node');
-                    icon2.innerText = '👥'; // Change padlock to people icon
-                    node2.onclick = () => alert('Module 2: Historical Development & Key Figures loading...');
+                    // Unlock Node 2
+                    if (level >= 2) {
+                        const node2 = document.getElementById('node-2');
+                        node2.className = "node active-node";
+                        document.getElementById('icon-2').innerText = "👥";
+                        document.getElementById('title-2').style.color = "#333";
+                        document.getElementById('line-1').className = "path-line active-line";
+                        node2.onclick = () => window.location.href = 'module-2.html';
+                    }
+                    
+                    // Unlock Node 3
+                    if (level >= 3) {
+                        const node3 = document.getElementById('node-3');
+                        node3.className = "node active-node";
+                        document.getElementById('icon-3').innerText = "🔍";
+                        document.getElementById('title-3').style.color = "#333";
+                        document.getElementById('line-2').className = "path-line active-line";
+                        node3.onclick = () => alert("Module 3 coming soon!");
+                    }
                 }
             }
         });
