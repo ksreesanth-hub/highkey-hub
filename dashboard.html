@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HighKey | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <img src="HighKey_Logo.png" alt="HighKey Logo" class="logo-small">
+        <button id="logout-btn" class="secondary-btn">Logout</button>
+    </header>
+    
+    <main class="dashboard-main">
+        <h1>Your Courses</h1>
+        <div class="course-grid">
+            
+            <!-- Course Card 1: Social Psychology -->
+            <div class="course-card" onclick="window.location.href='social-psychology.html'">
+                <div class="card-image bg-orange">
+                    <h2>SP</h2>
+                </div>
+                <div class="card-content">
+                    <h3>Social Psychology</h3>
+                    <p>24VMC203</p>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+                    <p class="progress-text">0% Completed</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
