@@ -42,6 +42,11 @@
 
         <div class="node-wrapper"><div class="node locked-node" id="node-6"><span class="node-icon" id="icon-6">🔒</span></div><p class="node-title" id="title-6" style="color: var(--light-text);">Impression Formation</p></div>
         
+        <!-- ADD NODE 7 HERE -->
+        <div class="path-line locked-line" id="line-6"></div>
+
+        <div class="node-wrapper"><div class="node locked-node" id="node-7"><span class="node-icon" id="icon-7">🔒</span></div><p class="node-title" id="title-7" style="color: var(--light-text);">Attribution Theory</p></div>
+
     </main>
 
     <script type="module">
@@ -98,12 +103,22 @@
                         document.getElementById('line-4').className = "path-line active-line";
                         document.getElementById('node-5').onclick = () => window.location.href = 'module-5.html';
                     }
+                    // ... existing code ...
+                    // Unlock Node 6
                     if (level >= 6) {
                         document.getElementById('node-6').className = "node active-node";
                         document.getElementById('icon-6').innerText = "🎭";
                         document.getElementById('title-6').style.color = "#333";
                         document.getElementById('line-5').className = "path-line active-line";
                         document.getElementById('node-6').onclick = () => window.location.href = 'module-6.html';
+                    }
+                    // ADD UNLOCK LOGIC FOR NODE 7
+                    if (level >= 7) {
+                        document.getElementById('node-7').className = "node active-node";
+                        document.getElementById('icon-7').innerText = "⚖️";
+                        document.getElementById('title-7').style.color = "#333";
+                        document.getElementById('line-6').className = "path-line active-line";
+                        document.getElementById('node-7').onclick = () => window.location.href = 'module-7.html';
                     }
                 }
             }
