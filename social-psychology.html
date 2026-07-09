@@ -14,35 +14,22 @@
     </header>
 
     <main class="path-container">
-        <h3 style="text-align: center; color: var(--light-text); margin-bottom: 40px;">Level 1: Foundations of the Social Mind</h3>
+        <!-- UNIT 1 -->
+        <h3 style="text-align: center; color: var(--light-text); margin-bottom: 40px;">Unit 1: Introduction to Social Psychology</h3>
 
-        <!-- Node 1: Introduction -->
-        <div class="node-wrapper">
-            <div class="node active-node" onclick="window.location.href='module-1.html'">
-                <span class="node-icon">🧠</span>
-            </div>
-            <p class="node-title">Introduction</p>
-        </div>
-
+        <div class="node-wrapper"><div class="node active-node" onclick="window.location.href='module-1.html'"><span class="node-icon">🧠</span></div><p class="node-title">Introduction</p></div>
         <div class="path-line" id="line-1"></div>
-
-        <!-- Node 2: Key Figures -->
-        <div class="node-wrapper">
-            <div class="node locked-node" id="node-2">
-                <span class="node-icon" id="icon-2">🔒</span>
-            </div>
-            <p class="node-title" id="title-2" style="color: var(--light-text);">Key Figures</p>
-        </div>
-
+        <div class="node-wrapper"><div class="node locked-node" id="node-2"><span class="node-icon" id="icon-2">🔒</span></div><p class="node-title" id="title-2" style="color: var(--light-text);">Key Figures</p></div>
         <div class="path-line locked-line" id="line-2"></div>
+        <div class="node-wrapper"><div class="node locked-node" id="node-3"><span class="node-icon" id="icon-3">🔒</span></div><p class="node-title" id="title-3" style="color: var(--light-text);">Levels of Analysis</p></div>
+        
+        <div class="path-line locked-line" id="line-3"></div>
 
-        <!-- Node 3: Levels of Analysis -->
-        <div class="node-wrapper">
-            <div class="node locked-node" id="node-3">
-                <span class="node-icon" id="icon-3">🔒</span>
-            </div>
-            <p class="node-title" id="title-3" style="color: var(--light-text);">Levels of Analysis</p>
-        </div>
+        <!-- UNIT 2 -->
+        <h3 style="text-align: center; color: var(--brand-orange); margin: 40px 0;">Unit 2: Social Cognition and Perception</h3>
+
+        <div class="node-wrapper"><div class="node locked-node" id="node-4"><span class="node-icon" id="icon-4">🔒</span></div><p class="node-title" id="title-4" style="color: var(--light-text);">Social Cognition</p></div>
+        
     </main>
 
     <script type="module">
@@ -71,24 +58,27 @@
                 if (docSnap.exists()) {
                     const level = docSnap.data().sp_level;
                     
-                    // Unlock Node 2
                     if (level >= 2) {
-                        const node2 = document.getElementById('node-2');
-                        node2.className = "node active-node";
+                        document.getElementById('node-2').className = "node active-node";
                         document.getElementById('icon-2').innerText = "👥";
                         document.getElementById('title-2').style.color = "#333";
                         document.getElementById('line-1').className = "path-line active-line";
-                        node2.onclick = () => window.location.href = 'module-2.html';
+                        document.getElementById('node-2').onclick = () => window.location.href = 'module-2.html';
                     }
-                    
-                    // Unlock Node 3
-                if (level >= 3) {
-                    const node3 = document.getElementById('node-3');
-                    node3.className = "node active-node";
-                    document.getElementById('icon-3').innerText = "🔍";
-                    document.getElementById('title-3').style.color = "#333";
-                    document.getElementById('line-2').className = "path-line active-line";
-                    node3.onclick = () => window.location.href = 'module-3.html'; // This line is updated!
+                    if (level >= 3) {
+                        document.getElementById('node-3').className = "node active-node";
+                        document.getElementById('icon-3').innerText = "🔍";
+                        document.getElementById('title-3').style.color = "#333";
+                        document.getElementById('line-2').className = "path-line active-line";
+                        document.getElementById('node-3').onclick = () => window.location.href = 'module-3.html';
+                    }
+                    // Unlock Unit 2 / Node 4!
+                    if (level >= 4) {
+                        document.getElementById('node-4').className = "node active-node";
+                        document.getElementById('icon-4').innerText = "👁️";
+                        document.getElementById('title-4').style.color = "#333";
+                        document.getElementById('line-3').className = "path-line active-line";
+                        document.getElementById('node-4').onclick = () => window.location.href = 'module-4.html';
                     }
                 }
             }
