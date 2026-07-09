@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 7 | HighKey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <button onclick="window.location.href='social-psychology.html'" class="secondary-btn">← Exit</button>
+        <div class="lesson-progress-bar">
+            <div id="progress-fill" class="progress-bar-fill" style="width: 20%;"></div>
+        </div>
+    </header>
+
+    <main class="flashcard-container">
+        <div class="flashcard" id="flashcard">
+            <h2 id="card-title" class="card-title">Loading...</h2>
+            <p id="card-content" class="card-text" style="font-size: 16px; text-align: left;"></p>
+        </div>
+        <button id="next-btn" class="primary-btn" style="margin-top: 30px;">Continue</button>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDWmgWjv2qPL8_NOyG2dKGfFhV13jhwUfU",
+          authDomain: "highkey-hub-937cb.firebaseapp.com",
+          projectId: "highkey-hub-937cb",
+          storageBucket: "highkey-hub-937cb.firebasestorage.app",
+          messagingSenderId: "1037256979554",
+          appId: "1:1037256979554:web:04b33851ba444b99ca8d3b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const lessonData = [
+            { 
+                title: "Attribution Theory", 
+                content: "<strong>Fritz Heider (1958):</strong> Known as the 'Father of Attribution Theory'[cite: 4].<br><br>He proposed that humans are 'naive psychologists' who constantly seek cause-and-effect relationships to understand social behavior[cite: 4]." 
+            },
+            { 
+                title: "Dispositional Attribution", 
+                content: "Also known as <strong>Internal Attribution</strong>.<br><br>This occurs when behavior is explained by a person's internal characteristics, such as their personality traits, abilities, or character[cite: 4]." 
+            },
+            { 
+                title: "Situational Attribution", 
+                content: "Also known as <strong>External Attribution</strong>.<br><br>This occurs when behavior is explained by external circumstances, such as environmental or contextual factors that are outside the person's control[cite: 4]." 
+            },
+            { 
+                title: "Fundamental Attribution Error", 
+                content: "The tendency to overemphasize dispositional (internal) factors and underemphasize situational (external) factors when explaining other people's behavior[cite: 4].<br><br><em>We often judge others by their personality, but judge ourselves by our circumstances!</em>" 
+            },
+            { 
+                title: "Culture & Attribution", 
+                content: "<strong>Western (Individualistic):</strong> Tend to emphasize internal, personality-based attributions[cite: 9].<br><br><strong>Eastern (Collectivistic):</strong> Lean towards external, situation-based attributions[cite: 9].<br><br><em>Example: When a student fails an exam, individualistic cultures might blame lack of ability, while collectivistic cultures might consider if the exam was too difficult or if there were family problems[cite: 9].</em>" 
+            }
+        ];
+
+        let currentCard = 0;
+        const cardTitle = document.getElementById('card-title');
+        const cardContent = document.getElementById('card-content');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+
+        function loadCard() {
+            cardTitle.innerText = lessonData[currentCard].title;
+            cardContent.innerHTML = lessonData[currentCard].content;
+            progressFill.style.width = (((currentCard + 1) / lessonData.length) * 100) + '%';
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loadCard(); 
+                
+                nextBtn.addEventListener('click', async () => {
+                    currentCard++;
+                    if (currentCard < lessonData.length) {
+                        loadCard();
+                    } else {
+                        nextBtn.innerText = "Saving...";
+                        // Upgrade to Level 8 to unlock Unit 3!
+                        await setDoc(doc(db, "users", user.uid), { sp_level: 8 }, { merge: true });
+                        alert("Unit 2 Complete! You are ready for Social Influence.");
+                        window.location.href = "social-psychology.html"; 
+                    }
+                });
+            } else {
+                window.location.href = "index.html"; 
+            }
+        });
+    </script>
+</body>
+</html>
