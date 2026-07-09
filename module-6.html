@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6 | HighKey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <button onclick="window.location.href='social-psychology.html'" class="secondary-btn">← Exit</button>
+        <div class="lesson-progress-bar">
+            <div id="progress-fill" class="progress-bar-fill" style="width: 16%;"></div>
+        </div>
+    </header>
+
+    <main class="flashcard-container">
+        <div class="flashcard" id="flashcard">
+            <h2 id="card-title" class="card-title">Loading...</h2>
+            <p id="card-content" class="card-text" style="font-size: 16px; text-align: left;"></p>
+        </div>
+        <button id="next-btn" class="primary-btn" style="margin-top: 30px;">Continue</button>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDWmgWjv2qPL8_NOyG2dKGfFhV13jhwUfU",
+          authDomain: "highkey-hub-937cb.firebaseapp.com",
+          projectId: "highkey-hub-937cb",
+          storageBucket: "highkey-hub-937cb.firebasestorage.app",
+          messagingSenderId: "1037256979554",
+          appId: "1:1037256979554:web:04b33851ba444b99ca8d3b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Unit 2 Content purely from Unit 2.pptx
+        const lessonData = [
+            { 
+                title: "What is Impression Formation?", 
+                content: "Impression formation is how we combine different pieces of information (like behavior, looks, words, tone) to form an overall picture of a person[cite: 5].<br><br>Traits are not judged separately; they are integrated into a single, overall impression that can color how new information is interpreted[cite: 5]." 
+            },
+            { 
+                title: "Primacy & Recency Effects", 
+                content: "<strong>Primacy Effect:</strong> The information received first has a stronger impact on the overall impression than information received later[cite: 5]. It creates a 'frame' or story in the mind[cite: 5].<br><br><strong>Recency Effect:</strong> The most recent information sometimes has the strongest effect, especially when presented close together or when memory is weak[cite: 5]." 
+            },
+            { 
+                title: "Perceptual Accentuation", 
+                content: "People tend to see what they expect or want to see; they 'accentuate' (highlight) details that match expectations and downplay mismatches[cite: 5].<br><br>Expectations guide attention and interpretation. Confirming details 'pop out'; disconfirming details are ignored or minimized[cite: 5]." 
+            },
+            { 
+                title: "Central Traits", 
+                content: "Some traits have a stronger influence on the overall impression and can change the meaning of other traits[cite: 5].<br><br><strong>Classic demonstration:</strong> If a person is described with the same list of traits but one word is changed—'warm' vs. 'cold'—the whole impression shifts[cite: 5]. 'Warm' makes 'assertive' feel helpful; 'cold' makes 'assertive' feel harsh[cite: 5]." 
+            },
+            { 
+                title: "Stereotypes", 
+                content: "Stereotypes are fixed, oversimplified ideas or generalizations about a group of people[cite: 5].<br><br>They influence impression formation by making us expect certain traits or behaviors from people belonging to specific groups[cite: 5]." 
+            }
+        ];
+
+        let currentCard = 0;
+        const cardTitle = document.getElementById('card-title');
+        const cardContent = document.getElementById('card-content');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+
+        function loadCard() {
+            cardTitle.innerText = lessonData[currentCard].title;
+            cardContent.innerHTML = lessonData[currentCard].content;
+            progressFill.style.width = (((currentCard + 1) / lessonData.length) * 100) + '%';
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loadCard(); 
+                
+                nextBtn.addEventListener('click', async () => {
+                    currentCard++;
+                    if (currentCard < lessonData.length) {
+                        loadCard();
+                    } else {
+                        nextBtn.innerText = "Saving...";
+                        // Upgrade to Level 7 to unlock the next concept!
+                        await setDoc(doc(db, "users", user.uid), { sp_level: 7 }, { merge: true });
+                        alert("Module Complete! You unlocked Attribution Theories.");
+                        window.location.href = "social-psychology.html"; 
+                    }
+                });
+            } else {
+                window.location.href = "index.html"; 
+            }
+        });
+    </script>
+</body>
+</html>
