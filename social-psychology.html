@@ -10,13 +10,13 @@
     <header class="dashboard-header">
         <button onclick="window.location.href='dashboard.html'" class="secondary-btn">← Back</button>
         <h2 style="margin:0; font-family:'Comfortaa', sans-serif; color:var(--dark-text);">Social Psychology</h2>
-        <div style="width: 80px;"></div> <!-- Invisible spacer to keep the title centered -->
+        <div style="width: 80px;"></div>
     </header>
 
     <main class="path-container">
         <h3 style="text-align: center; color: var(--light-text); margin-bottom: 40px;">Level 1: Foundations of the Social Mind</h3>
 
-        <!-- Node 1: Introduction (Active) -->
+        <!-- Node 1: Introduction (Always Active) -->
         <div class="node-wrapper">
             <div class="node active-node" onclick="window.location.href='module-1.html'">
                 <span class="node-icon">🧠</span>
@@ -24,12 +24,12 @@
             <p class="node-title">Introduction</p>
         </div>
 
-        <div class="path-line"></div>
+        <div class="path-line" id="line-1"></div>
 
-        <!-- Node 2: Key Figures (Locked) -->
+        <!-- Node 2: Key Figures (Starts Locked, unlocks via Firebase) -->
         <div class="node-wrapper">
-            <div class="node locked-node">
-                <span class="node-icon">🔒</span>
+            <div class="node locked-node" id="node-2">
+                <span class="node-icon" id="icon-2">🔒</span>
             </div>
             <p class="node-title" style="color: var(--light-text);">Key Figures</p>
         </div>
@@ -44,5 +44,43 @@
             <p class="node-title" style="color: var(--light-text);">Levels of Analysis</p>
         </div>
     </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDWmgWjv2qPL8_NOyG2dKGfFhV13jhwUfU",
+          authDomain: "highkey-hub-937cb.firebaseapp.com",
+          projectId: "highkey-hub-937cb",
+          storageBucket: "highkey-hub-937cb.firebasestorage.app",
+          messagingSenderId: "1037256979554",
+          appId: "1:1037256979554:web:04b33851ba444b99ca8d3b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Check user level and unlock nodes
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists() && docSnap.data().sp_level >= 2) {
+                    // Unlock Node 2!
+                    const node2 = document.getElementById('node-2');
+                    const icon2 = document.getElementById('icon-2');
+                    
+                    node2.classList.remove('locked-node');
+                    node2.classList.add('active-node');
+                    icon2.innerText = '👥'; // Change padlock to people icon
+                    node2.onclick = () => alert('Module 2: Historical Development & Key Figures loading...');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
