@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 | HighKey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <button onclick="window.location.href='social-psychology.html'" class="secondary-btn">← Exit</button>
+        <div class="lesson-progress-bar">
+            <div id="progress-fill" class="progress-bar-fill" style="width: 25%;"></div>
+        </div>
+    </header>
+
+    <main class="flashcard-container">
+        <!-- The Flashcard -->
+        <div class="flashcard" id="flashcard">
+            <h2 id="card-title" class="card-title">What is Social Psychology?</h2>
+            <p id="card-content" class="card-text">It is the scientific study of how people's thoughts, feelings, and behaviors are influenced by the actual, imagined, or implied presence of others.</p>
+        </div>
+
+        <button id="next-btn" class="primary-btn" style="margin-top: 30px;">Continue</button>
+    </main>
+
+    <script>
+        // The Course Content for Node 1
+        const lessonData = [
+            {
+                title: "The Core Definition",
+                content: "Social psychology is the scientific study of how people's thoughts, feelings, and behaviors are influenced by the actual, imagined, or implied presence of others."
+            },
+            {
+                title: "Nature & Scope",
+                content: "It relies on empirical research and the experimental method, bridging the gap between individual psychology (the brain) and sociology (society at large)."
+            },
+            {
+                title: "Philosophical Roots",
+                content: "Long before modern experiments, philosophers like Aristotle and Plato debated human behavior and group dynamics, laying the groundwork for how we understand society today."
+            },
+            {
+                title: "Knowledge Check!",
+                content: "Is Social Psychology just 'common sense' or is it a scientific discipline based on empirical data? (Say the answer out loud!)"
+            }
+        ];
+
+        let currentCard = 0;
+        const cardTitle = document.getElementById('card-title');
+        const cardContent = document.getElementById('card-content');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+
+        nextBtn.addEventListener('click', () => {
+            currentCard++;
+            
+            if (currentCard < lessonData.length) {
+                // Update Card Content
+                cardTitle.innerText = lessonData[currentCard].title;
+                cardContent.innerText = lessonData[currentCard].content;
+                
+                // Update Progress Bar
+                const progressPercentage = ((currentCard + 1) / lessonData.length) * 100;
+                progressFill.style.width = progressPercentage + '%';
+            } else {
+                // Lesson Complete!
+                alert("Level Complete! You earned +50 XP.");
+                window.location.href = "social-psychology.html"; // Send them back to the path
+            }
+        });
+    </script>
+</body>
+</html>
