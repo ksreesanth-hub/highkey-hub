@@ -40,23 +40,23 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Unit 2 Content with Embedded Links and Styling
+        // Unit 2 Content purely from Unit 2.pptx
         const lessonData = [
             { 
                 title: "What is Social Cognition?", 
-                content: "<strong>Definition:</strong> The mental processes involved in perceiving, interpreting, and responding to social information about other people and social situations.<br><br>The goal is to provide mechanistic, process-oriented explanations of complex social phenomena.<br><br><a href='https://www.simplypsychology.org/social-cognition.html' target='_blank' style='color: #F05A28; font-weight: bold;'>📖 External Resource: Read more on SimplyPsychology</a>" 
+                content: "<strong>Definition:</strong> The mental processes involved in perceiving, interpreting, and responding to social information about other people and social situations.<br><br><strong>Core Domains:</strong><br>• Social perception (processing faces, expressions and social cues)<br>• Social understanding (Theory of mind and inferring intentions/beliefs)<br>• Social decision-making" 
             },
             { 
-                title: "The Core Processes", 
-                content: "Social cognition follows a 4-stage perception formation process:<br><br>1. <strong>Social Stimuli:</strong> Gathering information about others.<br>2. <strong>Attention:</strong> Focusing on specific stimuli.<br>3. <strong>Encoding:</strong> Storing information in memory.<br>4. <strong>Retrieval:</strong> Accessing and making sense of the information.<br><br><a href='https://www.youtube.com/results?search_query=social+cognition+psychology' target='_blank' style='color: #F05A28; font-weight: bold;'>📺 Search YouTube: Social Cognition Explanations</a>" 
+                title: "Basic Processes", 
+                content: "Social cognition relies on four basic processes:<br><br>1. <strong>Attention</strong><br>2. <strong>Interpretation</strong><br>3. <strong>Memory</strong><br>4. <strong>Judgement</strong>" 
             },
             { 
-                title: "Mental Shortcuts: Heuristics", 
-                content: "Heuristics are simple rules the brain uses to make quick decisions without processing every detail. While efficient, they can lead to biases.<br><br>• <strong>Availability:</strong> Judging likelihood based on how easily examples come to mind.<br>• <strong>Representativeness:</strong> Judging based on similarity to a typical example.<br>• <strong>Anchoring:</strong> Relying heavily on the first piece of information received.<br><br><a href='https://thedecisionlab.com/psychology/cognitive/heuristics' target='_blank' style='color: #F05A28; font-weight: bold;'>🧠 Deep Dive: The Decision Lab on Heuristics</a>" 
+                title: "Heuristics in Social Cognition", 
+                content: "Heuristics are mental shortcuts or simple rules the brain uses to make quick decisions without processing every detail.<br><br>• <strong>Availability:</strong> Estimating likelihood based on how easily examples come to mind.<br>• <strong>Representativeness:</strong> Judging based on similarity to a typical example.<br>• <strong>Anchoring:</strong> Relying heavily on the first piece of information received." 
             },
             { 
-                title: "Confirmation Bias", 
-                content: "The tendency to look for, remember, and notice information that confirms our existing beliefs. We often ignore or forget information that contradicts what we already think.<br><br><em>Example: An algorithm showing you only news that agrees with your political views.</em><br><br><iframe width='100%' height='200' src='https://www.youtube.com/embed/vka1iInHjHI?si=k9tS-VfLzS_H-Z5j' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>" 
+                title: "Biases Related to Heuristics", 
+                content: "<strong>Confirmation Bias:</strong> The tendency to look for, remember, and notice information that confirms our existing beliefs. We often ignore information that contradicts what we already think.<br><br><strong>Availability Heuristic Bias:</strong> Making judgments based on how easily examples come to mind. If something is recent, dramatic, or memorable, we often overestimate its importance." 
             }
         ];
 
@@ -66,17 +66,15 @@
         const nextBtn = document.getElementById('next-btn');
         const progressFill = document.getElementById('progress-fill');
 
-        // Function to load the current card
         function loadCard() {
             cardTitle.innerText = lessonData[currentCard].title;
-            // CRUCIAL CHANGE: Using innerHTML instead of innerText so links and videos render!
             cardContent.innerHTML = lessonData[currentCard].content;
             progressFill.style.width = (((currentCard + 1) / lessonData.length) * 100) + '%';
         }
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                loadCard(); // Load first card immediately
+                loadCard(); 
                 
                 nextBtn.addEventListener('click', async () => {
                     currentCard++;
@@ -84,7 +82,6 @@
                         loadCard();
                     } else {
                         nextBtn.innerText = "Saving...";
-                        // Upgrade the student to Level 5 (Starts Node 5)
                         await setDoc(doc(db, "users", user.uid), { sp_level: 5 }, { merge: true });
                         alert("Module Complete! You unlocked The Self & Identity.");
                         window.location.href = "social-psychology.html"; 
