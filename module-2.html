@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2 | HighKey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <button onclick="window.location.href='social-psychology.html'" class="secondary-btn">← Exit</button>
+        <div class="lesson-progress-bar">
+            <div id="progress-fill" class="progress-bar-fill" style="width: 20%;"></div>
+        </div>
+    </header>
+
+    <main class="flashcard-container">
+        <div class="flashcard" id="flashcard">
+            <h2 id="card-title" class="card-title">Early Influences</h2>
+            <p id="card-content" class="card-text">Aristotle believed that humans were naturally sociable, an individual-centered approach. Plato felt that the state controlled the individual, encouraging social responsibility through a socio-centered approach.</p>
+        </div>
+        <button id="next-btn" class="primary-btn" style="margin-top: 30px;">Continue</button>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDWmgWjv2qPL8_NOyG2dKGfFhV13jhwUfU",
+          authDomain: "highkey-hub-937cb.firebaseapp.com",
+          projectId: "highkey-hub-937cb",
+          storageBucket: "highkey-hub-937cb.firebasestorage.app",
+          messagingSenderId: "1037256979554",
+          appId: "1:1037256979554:web:04b33851ba444b99ca8d3b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Your exact PPT content for Module 2
+        const lessonData = [
+            { title: "Early Influences", content: "Aristotle believed that humans were naturally sociable, an individual-centered approach. Plato felt that the state controlled the individual, encouraging social responsibility through a socio-centered approach." },
+            { title: "Gustave Le Bon", content: "Crowd Psychology: When individuals come together as a crowd, they form a 'collective mind.' Characteristics include anonymity, contagion, and suggestibility, where rationality declines." },
+            { title: "Norman Triplett", content: "Social Facilitation (1898): Observed cyclists who performed better when competing against others than when alone. The presence of others enhances performance on simple tasks." },
+            { title: "Floyd Allport", content: "The Experimental Approach: Emphasized that social psychology should be empirical and experimental. He shifted the field from philosophical roots to a rigorous, scientific discipline." },
+            { title: "The Social Self", content: "Charles Horton Cooley introduced the 'Looking-Glass Self.' Our self-identity develops through our perceptions of how others see us and their judgments of us." }
+        ];
+
+        let currentCard = 0;
+        const cardTitle = document.getElementById('card-title');
+        const cardContent = document.getElementById('card-content');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                nextBtn.addEventListener('click', async () => {
+                    currentCard++;
+                    if (currentCard < lessonData.length) {
+                        cardTitle.innerText = lessonData[currentCard].title;
+                        cardContent.innerText = lessonData[currentCard].content;
+                        progressFill.style.width = (((currentCard + 1) / lessonData.length) * 100) + '%';
+                    } else {
+                        nextBtn.innerText = "Saving...";
+                        // Upgrades the student to Level 3!
+                        await setDoc(doc(db, "users", user.uid), { sp_level: 3 }, { merge: true });
+                        alert("Level Complete! You unlocked Levels of Analysis.");
+                        window.location.href = "social-psychology.html"; 
+                    }
+                });
+            } else {
+                window.location.href = "index.html"; 
+            }
+        });
+    </script>
+</body>
+</html>
