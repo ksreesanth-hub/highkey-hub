@@ -18,9 +18,13 @@
         <h3 style="text-align: center; color: var(--light-text); margin-bottom: 40px;">Unit 1: Introduction to Social Psychology</h3>
 
         <div class="node-wrapper"><div class="node active-node" onclick="window.location.href='module-1.html'"><span class="node-icon">🧠</span></div><p class="node-title">Introduction</p></div>
+        
         <div class="path-line" id="line-1"></div>
+        
         <div class="node-wrapper"><div class="node locked-node" id="node-2"><span class="node-icon" id="icon-2">🔒</span></div><p class="node-title" id="title-2" style="color: var(--light-text);">Key Figures</p></div>
+        
         <div class="path-line locked-line" id="line-2"></div>
+        
         <div class="node-wrapper"><div class="node locked-node" id="node-3"><span class="node-icon" id="icon-3">🔒</span></div><p class="node-title" id="title-3" style="color: var(--light-text);">Levels of Analysis</p></div>
         
         <div class="path-line locked-line" id="line-3"></div>
@@ -29,6 +33,14 @@
         <h3 style="text-align: center; color: var(--brand-orange); margin: 40px 0;">Unit 2: Social Cognition and Perception</h3>
 
         <div class="node-wrapper"><div class="node locked-node" id="node-4"><span class="node-icon" id="icon-4">🔒</span></div><p class="node-title" id="title-4" style="color: var(--light-text);">Social Cognition</p></div>
+        
+        <div class="path-line locked-line" id="line-4"></div>
+
+        <div class="node-wrapper"><div class="node locked-node" id="node-5"><span class="node-icon" id="icon-5">🔒</span></div><p class="node-title" id="title-5" style="color: var(--light-text);">The Self & Identity</p></div>
+        
+        <div class="path-line locked-line" id="line-5"></div>
+
+        <div class="node-wrapper"><div class="node locked-node" id="node-6"><span class="node-icon" id="icon-6">🔒</span></div><p class="node-title" id="title-6" style="color: var(--light-text);">Impression Formation</p></div>
         
     </main>
 
@@ -72,7 +84,6 @@
                         document.getElementById('line-2').className = "path-line active-line";
                         document.getElementById('node-3').onclick = () => window.location.href = 'module-3.html';
                     }
-                    // Unlock Unit 2 / Node 4!
                     if (level >= 4) {
                         document.getElementById('node-4').className = "node active-node";
                         document.getElementById('icon-4').innerText = "👁️";
@@ -80,8 +91,6 @@
                         document.getElementById('line-3').className = "path-line active-line";
                         document.getElementById('node-4').onclick = () => window.location.href = 'module-4.html';
                     }
-                    
-                    // Unlock Node 5
                     if (level >= 5) {
                         document.getElementById('node-5').className = "node active-node";
                         document.getElementById('icon-5').innerText = "👤";
@@ -89,8 +98,6 @@
                         document.getElementById('line-4').className = "path-line active-line";
                         document.getElementById('node-5').onclick = () => window.location.href = 'module-5.html';
                     }
-                    
-                    // ADD UNLOCK LOGIC FOR NODE 6 HERE
                     if (level >= 6) {
                         document.getElementById('node-6').className = "node active-node";
                         document.getElementById('icon-6').innerText = "🎭";
