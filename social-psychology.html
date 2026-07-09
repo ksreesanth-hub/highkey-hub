@@ -81,13 +81,22 @@
                         document.getElementById('node-4').onclick = () => window.location.href = 'module-4.html';
                     }
                     
-                    // Add the unlock logic for Node 5 here
+                    // Unlock Node 5
                     if (level >= 5) {
                         document.getElementById('node-5').className = "node active-node";
                         document.getElementById('icon-5').innerText = "👤";
                         document.getElementById('title-5').style.color = "#333";
                         document.getElementById('line-4').className = "path-line active-line";
                         document.getElementById('node-5').onclick = () => window.location.href = 'module-5.html';
+                    }
+                    
+                    // ADD UNLOCK LOGIC FOR NODE 6 HERE
+                    if (level >= 6) {
+                        document.getElementById('node-6').className = "node active-node";
+                        document.getElementById('icon-6').innerText = "🎭";
+                        document.getElementById('title-6').style.color = "#333";
+                        document.getElementById('line-5').className = "path-line active-line";
+                        document.getElementById('node-6').onclick = () => window.location.href = 'module-6.html';
                     }
                 }
             }
