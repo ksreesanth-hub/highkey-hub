@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5 | HighKey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <button onclick="window.location.href='social-psychology.html'" class="secondary-btn">← Exit</button>
+        <div class="lesson-progress-bar">
+            <div id="progress-fill" class="progress-bar-fill" style="width: 20%;"></div>
+        </div>
+    </header>
+
+    <main class="flashcard-container">
+        <div class="flashcard" id="flashcard">
+            <h2 id="card-title" class="card-title">Loading...</h2>
+            <p id="card-content" class="card-text" style="font-size: 16px; text-align: left;"></p>
+        </div>
+        <button id="next-btn" class="primary-btn" style="margin-top: 30px;">Continue</button>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDWmgWjv2qPL8_NOyG2dKGfFhV13jhwUfU",
+          authDomain: "highkey-hub-937cb.firebaseapp.com",
+          projectId: "highkey-hub-937cb",
+          storageBucket: "highkey-hub-937cb.firebasestorage.app",
+          messagingSenderId: "1037256979554",
+          appId: "1:1037256979554:web:04b33851ba444b99ca8d3b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Unit 2 Content purely from Unit 2.pptx
+        const lessonData = [
+            { 
+                title: "The Self: Components of Identity", 
+                content: "Identity refers to how individuals define, understand, and see themselves[cite: 4]. This involves both unique personal qualities and group memberships, and is shaped by cultural, family, and social influences[cite: 4]." 
+            },
+            { 
+                title: "Personal Identity", 
+                content: "Personal identity includes the things that make you unique[cite: 4]:<br><br>• <strong>Traits:</strong> e.g., honest, funny, hardworking[cite: 4]<br>• <strong>Beliefs:</strong> What you consider true, like 'education is important'[cite: 4]<br>• <strong>Values:</strong> What you care about, like kindness or teamwork[cite: 4]<br>• <strong>Goals:</strong> Future aspirations and dreams[cite: 4]" 
+            },
+            { 
+                title: "Social Identity", 
+                content: "Social identity is how you see yourself as part of different groups[cite: 4]:<br><br>• <strong>Family:</strong> 'I am a daughter/son'[cite: 4]<br>• <strong>School:</strong> 'I am a student'[cite: 4]<br>• <strong>Religion & Nationality:</strong> E.g., 'I am Indian'[cite: 4]<br>• <strong>Hobby/Sport:</strong> 'I am a cricketer'[cite: 4]" 
+            },
+            { 
+                title: "How Identity Is Shaped", 
+                content: "• <strong>Culture:</strong> Traditions and customs provide rules about 'what is normal.'[cite: 4]<br>• <strong>Family:</strong> Teaches values, beliefs, and behaviors from a young age[cite: 4].<br>• <strong>Society:</strong> Friends, teachers, and media expose you to new ideas and provide feedback about your behavior[cite: 4]." 
+            },
+            { 
+                title: "Key Theories of Identity", 
+                content: "<strong>Social Identity Theory (Tajfel & Turner, 1979):</strong> People categorize themselves into groups, identify with those groups, and compare themselves with other groups, which affects self-esteem and bias[cite: 4].<br><br><strong>Erik Erikson’s Theory:</strong> Identity develops in stages[cite: 4]. The teenage years are key ('Identity vs. Role Confusion'), where young people ask, 'Who am I?'[cite: 4]" 
+            }
+        ];
+
+        let currentCard = 0;
+        const cardTitle = document.getElementById('card-title');
+        const cardContent = document.getElementById('card-content');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+
+        function loadCard() {
+            cardTitle.innerText = lessonData[currentCard].title;
+            cardContent.innerHTML = lessonData[currentCard].content;
+            progressFill.style.width = (((currentCard + 1) / lessonData.length) * 100) + '%';
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loadCard(); 
+                
+                nextBtn.addEventListener('click', async () => {
+                    currentCard++;
+                    if (currentCard < lessonData.length) {
+                        loadCard();
+                    } else {
+                        nextBtn.innerText = "Saving...";
+                        await setDoc(doc(db, "users", user.uid), { sp_level: 6 }, { merge: true });
+                        alert("Module Complete! You unlocked Impression Formation.");
+                        window.location.href = "social-psychology.html"; 
+                    }
+                });
+            } else {
+                window.location.href = "index.html"; 
+            }
+        });
+    </script>
+</body>
+</html>
