@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Montserrat:wght@400;600&display=swap');
+
+:root {
+    --brand-orange: #F05A28; /* Matched to the HighKey H! */
+    --dark-text: #4A4A4A;
+    --light-text: #7A7A7A;
+    --bg-color: #FAFAFA;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--dark-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    max-width: 400px;
+    width: 90%;
+}
+
+.logo {
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-family: 'Comfortaa', sans-serif;
+    color: var(--light-text);
+    margin-bottom: 30px;
+}
+
+.primary-btn {
+    font-family: 'Comfortaa', sans-serif;
+    background-color: var(--brand-orange);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(240, 90, 40, 0.3);
+}
