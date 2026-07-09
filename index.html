@@ -41,7 +41,7 @@
             signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
-                alert("Welcome to HighKey, " + user.displayName + "!");
+                window.location.href = "dashboard.html";
             }).catch((error) => {
                 alert("Login failed: " + error.message);
             });
