@@ -82,13 +82,13 @@
                     }
                     
                     // Unlock Node 3
-                    if (level >= 3) {
-                        const node3 = document.getElementById('node-3');
-                        node3.className = "node active-node";
-                        document.getElementById('icon-3').innerText = "🔍";
-                        document.getElementById('title-3').style.color = "#333";
-                        document.getElementById('line-2').className = "path-line active-line";
-                        node3.onclick = () => alert("Module 3 coming soon!");
+                if (level >= 3) {
+                    const node3 = document.getElementById('node-3');
+                    node3.className = "node active-node";
+                    document.getElementById('icon-3').innerText = "🔍";
+                    document.getElementById('title-3').style.color = "#333";
+                    document.getElementById('line-2').className = "path-line active-line";
+                    node3.onclick = () => window.location.href = 'module-3.html'; // This line is updated!
                     }
                 }
             }
